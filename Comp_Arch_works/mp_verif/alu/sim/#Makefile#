@@ -1,0 +1,10 @@
+SHELL=/bin/bash -o pipefail
+.SHELLFLAGS += -e
+
+PKG_SRCS  :=
+HDL_SRCS  := $(shell find $(PWD)/../hdl -name '*.sv')
+COMM_HVL  :=
+VCS_HVL   := $(COMM_HVL) $(shell find $(PWD)/../hvl/vcs -name '*.sv' -o -name '*.v')
+VER_HVL   :=
+SRAM_SRCS :=
+HDRS      := $(sh
