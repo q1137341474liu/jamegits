@@ -1,0 +1,116 @@
+module reg16(input logic[15:0]	Din,
+				  input logic 	Clk, Reset, Load,
+				  output logic[15:0]	Dout);
+				
+						always_ff @ (posedge Clk )
+				
+							begin
+								if(Reset)
+									Dout <= 16'h0000;
+								else if (Load)
+									Dout <= Din;
+							end
+	
+endmodule
+
+module reg1(input logic	Din,
+				  input logic 	Clk, Reset, Load,
+				  output logic	Dout);
+				
+						always_ff @ (posedge Clk )
+				
+							begin
+								if(Reset)
+									Dout <= 1'b0;
+								else if (Load)
+									Dout <= Din;
+							end
+	
+endmodule
+
+
+module PC (	input Clk, LD_PC, Reset,
+						input [1:0] Sel_PC,
+						input [15:0] Bus_In, Addr_In,
+						output logic [15:0] PC_Out);
+						
+	logic [15:0] PC_In;
+						
+	reg16 PC_Reg (.*, .Load(LD_PC), .Din(PC_In), .Dout(PC_Out));
+	
+	always_comb begin
+		unique case (Sel_PC)
+			2'b00		:	PC_In = PC_Out + 1;
+			2'b01		:	PC_In = Addr_In;
+			2'b10		:	PC_In = Bus_In;
+			default	:	PC_In = PC_Out;
+		endcase
+	end
+endmodule
+			
+			
+
+module MAR (	input Clk, LD_MAR, Reset,
+					input [15:0] MAR_In,
+					output [15:0] MAR_Out);
+	
+	reg16 MA_Reg	(.*, .Load(LD_MAR), .Din(MAR_In), .Dout(MAR_Out));
+	
+endmodule
+
+
+
+module MDR (	input Clk, LD_MDR, Reset,
+					input MIO_EN,
+					input [15:0] Bus_In, MEM_In,
+					output logic [15:0] MDR_Out);
+					
+	logic [15:0] MDR_In;
+	
+	reg16 MD_Reg (.*, .Load(LD_MDR), .Din(MDR_In), .Dout(MDR_Out));
+	
+	always_comb begin
+		if (MIO_EN)
+			MDR_In = MEM_In;
+		else
+			MDR_In = Bus_In;
+	end
+endmodule		
+
+
+
+module IR (	input Clk, LD_IR, Reset,
+				input [15:0] IR_In,
+				output [15:0] IR_Out);
+	
+	reg16 Instruction_Reg	(.*, .Load(LD_IR), .Din(IR_In), .Dout(IR_Out));
+	
+endmodule
+
+
+module LED_Display	( 	input LD_LED,
+							input [15:0] IR,
+							output logic [9:0] LED);
+	
+	always_comb begin
+		if (LD_LED)
+			LED = IR[9:0];
+		else
+			LED = 10'h000;
+	end
+endmodule
+
+module Decoder (	input	[15:0] IR, PC_In, SR1_In,
+						input [1:0] ADDR2MUX,
+						input ADDR1MUX,
+						output logic [15:0] Decoder_Out);
+
+	logic [15:0] Adder1, Adder2;
+	mux4to1 ADDR2_MUX(.A(16'b0),.B({{10{IR[5]}}, IR[5:0]}), .C({{7{IR[8]}}, IR[8:0]}), .D({{5{IR[10]}},IR[10:0]}), .Select(ADDR2MUX), .out(Adder1));
+	mux2to1 ADDR1_MUX(.A(PC_In), .B(SR1_In), .Select(ADDR1MUX), .out(Adder2));
+	
+	always_comb begin
+		
+		Decoder_Out = Adder1 + Adder2;
+	end
+endmodule

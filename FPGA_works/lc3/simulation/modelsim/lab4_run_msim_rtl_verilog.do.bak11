@@ -1,0 +1,29 @@
+transcript on
+if {[file exists rtl_work]} {
+	vdel -lib rtl_work -all
+}
+vlib rtl_work
+vmap work rtl_work
+
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/test_memory.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/synchronizers.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/SLC3_2.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/registers.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/mux.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/Mem2IO.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/ISDU.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/HexDriver.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/alu.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/memory_contents.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/datapath.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/slc3.sv}
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/slc3_testtop.sv}
+
+vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/testbench.sv}
+
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L fiftyfivenm_ver -L rtl_work -L work -voptargs="+acc"  testbench
+
+add wave *
+view structure
+view signals
+run -all

@@ -1,0 +1,16 @@
+Analysis & Synthesis Status : Successful - Thu Jul 27 15:20:14 2023
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : adder2
+Top-level Entity Name : lab6
+Family : MAX 10
+Total logic elements : 52,627
+    Total combinational functions : 32,425
+    Dedicated logic registers : 21,766
+Total registers : 21766
+Total pins : 141
+Total virtual pins : 0
+Total memory bits : 11,264
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 1
+UFM blocks : 0
+ADC blocks : 0

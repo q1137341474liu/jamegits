@@ -1,0 +1,234 @@
+# Reading D:/modelsim_ase/tcl/vsim/pref.tcl
+# ERROR: No extended dataflow license exists
+# do lab4_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 10.5b Lib Mapping Utility 2016.10 Oct  5 2016
+# vmap work rtl_work 
+# Copying D:/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/test_memory.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:32 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/test_memory.sv 
+# -- Compiling module test_memory
+# 
+# Top level modules:
+# 	test_memory
+# End time: 10:07:32 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/synchronizers.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:32 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/synchronizers.sv 
+# -- Compiling module sync
+# -- Compiling module sync_r0
+# -- Compiling module sync_r1
+# 
+# Top level modules:
+# 	sync
+# 	sync_r0
+# 	sync_r1
+# End time: 10:07:32 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/SLC3_2.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:32 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/SLC3_2.sv 
+# -- Compiling package SLC3_2
+# 
+# Top level modules:
+# 	--none--
+# End time: 10:07:32 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/registers.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:32 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/registers.sv 
+# -- Compiling module reg16
+# -- Compiling module reg1
+# -- Compiling module PC_
+# -- Compiling module MAR_
+# -- Compiling module MDR_
+# -- Compiling module IR_
+# -- Compiling module LED_Display
+# -- Compiling module Decoder
+# -- Compiling module reg_file
+# -- Compiling module BEN_
+# 
+# Top level modules:
+# 	PC_
+# 	MAR_
+# 	MDR_
+# 	IR_
+# 	LED_Display
+# 	Decoder
+# 	reg_file
+# 	BEN_
+# End time: 10:07:32 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/mux.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:32 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/mux.sv 
+# -- Compiling module mux4
+# -- Compiling module mux2
+# 
+# Top level modules:
+# 	mux4
+# 	mux2
+# End time: 10:07:32 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/Mem2IO.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:32 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/Mem2IO.sv 
+# -- Compiling module Mem2IO
+# 
+# Top level modules:
+# 	Mem2IO
+# End time: 10:07:32 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/ISDU.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:32 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/ISDU.sv 
+# -- Compiling module ISDU
+# 
+# Top level modules:
+# 	ISDU
+# End time: 10:07:32 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/HexDriver.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:32 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/HexDriver.sv 
+# -- Compiling module HexDriver
+# 
+# Top level modules:
+# 	HexDriver
+# End time: 10:07:32 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/alu.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:32 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/alu.sv 
+# -- Compiling module ALU
+# 
+# Top level modules:
+# 	ALU
+# End time: 10:07:33 on Jul 11,2023, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/memory_contents.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:33 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/memory_contents.sv 
+# -- Compiling package memory_contents_sv_unit
+# -- Importing package SLC3_2
+# -- Compiling module memory_parser
+# 
+# Top level modules:
+# 	memory_parser
+# End time: 10:07:33 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/datapath.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:33 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/datapath.sv 
+# -- Compiling module datapath
+# 
+# Top level modules:
+# 	datapath
+# End time: 10:07:33 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/slc3.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:33 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/slc3.sv 
+# -- Compiling module slc3
+# 
+# Top level modules:
+# 	slc3
+# End time: 10:07:33 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/slc3_testtop.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:33 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/slc3_testtop.sv 
+# -- Compiling module slc3_testtop
+# 
+# Top level modules:
+# 	slc3_testtop
+# End time: 10:07:33 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vlog -sv -work work +incdir+D:/labs/lab4-su23 {D:/labs/lab4-su23/testbench.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:07:33 on Jul 11,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+D:/labs/lab4-su23" D:/labs/lab4-su23/testbench.sv 
+# -- Compiling module testbench
+# 
+# Top level modules:
+# 	testbench
+# End time: 10:07:33 on Jul 11,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L fiftyfivenm_ver -L rtl_work -L work -voptargs="+acc"  testbench
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L fiftyfivenm_ver -L rtl_work -L work -voptargs=""+acc"" testbench 
+# Start time: 10:07:33 on Jul 11,2023
+# Loading sv_std.std
+# Loading work.testbench
+# Loading work.slc3_testtop
+# Loading work.slc3
+# Loading work.datapath
+# Loading work.ALU
+# Loading work.PC_
+# Loading work.reg16
+# Loading work.MAR_
+# Loading work.MDR_
+# Loading work.IR_
+# Loading work.Decoder
+# Loading work.mux4
+# Loading work.mux2
+# Loading work.reg_file
+# Loading work.BEN_
+# Loading work.reg1
+# Loading work.LED_Display
+# Loading work.Mem2IO
+# Loading work.ISDU
+# Loading work.test_memory
+# Loading work.SLC3_2
+# Loading work.memory_contents_sv_unit
+# Loading work.memory_parser
+# Loading work.HexDriver
+# Loading work.sync
+# 
+# add wave *
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Shengmiao The Bunny  Hostname: DESKTOP-HSV7A5B  ProcessID: 12012
+#           Attempting to use alternate WLF file "./wlftrw45w8".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftrw45w8
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# ** Warning: (vsim-8315) D:/labs/lab4-su23/registers.sv(141): No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 0  Instance: /testbench/test/slc/d0/regfile
+# ** Warning: (vsim-8315) D:/labs/lab4-su23/registers.sv(152): No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 0  Instance: /testbench/test/slc/d0/regfile
+# ** Warning: (vsim-8315) D:/labs/lab4-su23/alu.sv(14): No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 0  Instance: /testbench/test/slc/d0/alu
+# ** Warning: (vsim-8315) D:/labs/lab4-su23/registers.sv(141): No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 1  Instance: /testbench/test/slc/d0/regfile
+# ** Warning: (vsim-8315) D:/labs/lab4-su23/registers.sv(152): No condition is true in the unique/priority if/case statement.
+#    Time: 0 ps  Iteration: 1  Instance: /testbench/test/slc/d0/regfile
+# Break key hit
+# Simulation stop requested.
+# End time: 10:07:50 on Jul 11,2023, Elapsed time: 0:00:17
+# Errors: 0, Warnings: 7

@@ -1,0 +1,697 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/labs/lab4-su23/simulation/modelsim
+vALU
+Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z2 !s110 1689041253
+!i10b 1
+!s100 IOWgIn`o`g3]Bb765K7@f2
+I2e;iAFUnN8@5Q57d6]K<h3
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+!s105 alu_sv_unit
+S1
+R0
+w1689041049
+8D:/labs/lab4-su23/alu.sv
+FD:/labs/lab4-su23/alu.sv
+L0 1
+Z4 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z5 !s108 1689041252.000000
+!s107 D:/labs/lab4-su23/alu.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/alu.sv|
+!i113 1
+Z6 o-sv -work work
+Z7 !s92 -sv -work work +incdir+D:/labs/lab4-su23
+Z8 tCvgOpt 0
+n@a@l@u
+vBEN_
+R1
+Z9 !s110 1689041252
+!i10b 1
+!s100 7EJK3Q_AKWKJd7am8e`SB3
+IR9ia:OgOLJ;]AmdJeNkdN2
+R3
+Z10 !s105 registers_sv_unit
+S1
+R0
+Z11 w1689041164
+Z12 8D:/labs/lab4-su23/registers.sv
+Z13 FD:/labs/lab4-su23/registers.sv
+L0 181
+R4
+r1
+!s85 0
+31
+R5
+Z14 !s107 D:/labs/lab4-su23/registers.sv|
+Z15 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/registers.sv|
+!i113 1
+R6
+R7
+R8
+n@b@e@n_
+vdatapath
+R1
+R2
+!i10b 1
+!s100 9m[NPEKKH`^6Q8aZT?VMk0
+IcZhL_35e47k:1]zIQbCX01
+R3
+!s105 datapath_sv_unit
+S1
+R0
+w1689041167
+8D:/labs/lab4-su23/datapath.sv
+FD:/labs/lab4-su23/datapath.sv
+L0 1
+R4
+r1
+!s85 0
+31
+Z16 !s108 1689041253.000000
+!s107 D:/labs/lab4-su23/datapath.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/datapath.sv|
+!i113 1
+R6
+R7
+R8
+vDecoder
+R1
+R9
+!i10b 1
+!s100 _TcW^:gNE4hYH5EiUGaHi2
+IDfgP_;G><IbVS4gA9]C8R2
+R3
+R10
+S1
+R0
+R11
+R12
+R13
+L0 103
+R4
+r1
+!s85 0
+31
+R5
+R14
+R15
+!i113 1
+R6
+R7
+R8
+n@decoder
+vHexDriver
+R1
+R9
+!i10b 1
+!s100 F7dDJLKONLDlAhT4ll@HA3
+I5g2QR[o1hWFSIX3JR?I;U1
+R3
+!s105 HexDriver_sv_unit
+S1
+R0
+w1420578704
+8D:/labs/lab4-su23/HexDriver.sv
+FD:/labs/lab4-su23/HexDriver.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/labs/lab4-su23/HexDriver.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/HexDriver.sv|
+!i113 1
+R6
+R7
+R8
+n@hex@driver
+vIR_
+R1
+R9
+!i10b 1
+!s100 E@oF;VU[3o>Z^hLl8_V0C0
+IcETRSeNCoh=GaN3A]VeJ_1
+R3
+R10
+S1
+R0
+R11
+R12
+R13
+L0 82
+R4
+r1
+!s85 0
+31
+R5
+R14
+R15
+!i113 1
+R6
+R7
+R8
+n@i@r_
+vISDU
+R1
+R9
+!i10b 1
+!s100 dCMNf^EU>CM8gTQHlZg;O3
+IlH4Wdie3ID>C5eW=Xb>iI3
+R3
+!s105 ISDU_sv_unit
+S1
+R0
+w1688908855
+8D:/labs/lab4-su23/ISDU.sv
+FD:/labs/lab4-su23/ISDU.sv
+Z17 L0 19
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/labs/lab4-su23/ISDU.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/ISDU.sv|
+!i113 1
+R6
+R7
+R8
+n@i@s@d@u
+vLED_Display
+R1
+R9
+!i10b 1
+!s100 z<6gC<L8jagfBF6ATYOTA1
+I55:XdWn^kbg?L^P2M=];K0
+R3
+R10
+S1
+R0
+R11
+R12
+R13
+L0 91
+R4
+r1
+!s85 0
+31
+R5
+R14
+R15
+!i113 1
+R6
+R7
+R8
+n@l@e@d_@display
+vMAR_
+R1
+R9
+!i10b 1
+!s100 L=ZU<OOLoP<[GEVF90VX^3
+IQW>bzSjd@X^;5BP=ZQG`70
+R3
+R10
+S1
+R0
+R11
+R12
+R13
+L0 53
+R4
+r1
+!s85 0
+31
+R5
+R14
+R15
+!i113 1
+R6
+R7
+R8
+n@m@a@r_
+vMDR_
+R1
+R9
+!i10b 1
+!s100 oPLJBF]`N`jHc9d5NJLG>1
+IPn961@NR1CWUOc7e=bY0e2
+R3
+R10
+S1
+R0
+R11
+R12
+R13
+L0 63
+R4
+r1
+!s85 0
+31
+R5
+R14
+R15
+!i113 1
+R6
+R7
+R8
+n@m@d@r_
+vMem2IO
+R1
+R9
+!i10b 1
+!s100 ]Q:NN9GIUgNPLn_MG6U5k1
+ImjQb5T5bbZNeS`UW@M0Fd0
+R3
+!s105 Mem2IO_sv_unit
+S1
+R0
+w1591652656
+8D:/labs/lab4-su23/Mem2IO.sv
+FD:/labs/lab4-su23/Mem2IO.sv
+Z18 L0 16
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/labs/lab4-su23/Mem2IO.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/Mem2IO.sv|
+!i113 1
+R6
+R7
+R8
+n@mem2@i@o
+Xmemory_contents_sv_unit
+R1
+Z19 DXx4 work 6 SLC3_2 0 22 HbQiiR5^Q<gSQiJzZ4[;V2
+V>OSgMaXdFYd:9oc4^1`0L1
+r1
+!s85 0
+31
+!i10b 1
+!s100 3HBe^oHDgeVH<TZocfCK[0
+I>OSgMaXdFYd:9oc4^1`0L1
+!i103 1
+S1
+R0
+Z20 w1591637472
+Z21 8D:/labs/lab4-su23/memory_contents.sv
+Z22 FD:/labs/lab4-su23/memory_contents.sv
+R18
+R4
+R16
+Z23 !s107 D:/labs/lab4-su23/memory_contents.sv|
+Z24 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/memory_contents.sv|
+!i113 1
+R6
+R7
+R8
+vmemory_parser
+R1
+R19
+DXx4 work 23 memory_contents_sv_unit 0 22 >OSgMaXdFYd:9oc4^1`0L1
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 o:B0TTcXZa[?Oo3HFa9T;0
+I_WA3Rmdne;:EPzz@nd:L>0
+!s105 memory_contents_sv_unit
+S1
+R0
+R20
+R21
+R22
+L0 18
+R4
+R16
+R23
+R24
+!i113 1
+R6
+R7
+R8
+vmux2
+R1
+R9
+!i10b 1
+!s100 6[b=@Lj2i>7f5R5mPm@U>3
+Iz3KJe8UHLm<dV@@o=cP3U1
+R3
+Z25 !s105 mux_sv_unit
+S1
+R0
+Z26 w1688305931
+Z27 8D:/labs/lab4-su23/mux.sv
+Z28 FD:/labs/lab4-su23/mux.sv
+R17
+R4
+r1
+!s85 0
+31
+R5
+Z29 !s107 D:/labs/lab4-su23/mux.sv|
+Z30 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/mux.sv|
+!i113 1
+R6
+R7
+R8
+vmux4
+R1
+R9
+!i10b 1
+!s100 c5=TkzB[a]AQI8dF;:RJJ3
+IiiES3E7X63EC]oR8P3Nd32
+R3
+R25
+S1
+R0
+R26
+R27
+R28
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+R29
+R30
+!i113 1
+R6
+R7
+R8
+vPC_
+R1
+R9
+!i10b 1
+!s100 dm0@iD[i1NI6HhW^C=Z8A1
+I[ZbBTG6a?N=:V2B6QfKRO3
+R3
+R10
+S1
+R0
+R11
+R12
+R13
+L0 32
+R4
+r1
+!s85 0
+31
+R5
+R14
+R15
+!i113 1
+R6
+R7
+R8
+n@p@c_
+vreg1
+R1
+R9
+!i10b 1
+!s100 D3O9cI_P5_@`X]9^fBIn43
+ISSQV:MI`3a7>0ER`<7EI03
+R3
+R10
+S1
+R0
+R11
+R12
+R13
+R18
+R4
+r1
+!s85 0
+31
+R5
+R14
+R15
+!i113 1
+R6
+R7
+R8
+vreg16
+R1
+R9
+!i10b 1
+!s100 z=nCTfDPWYTn]iFW7`Z@^3
+Id>l^VUafo78PP^:b7P0=M3
+R3
+R10
+S1
+R0
+R11
+R12
+R13
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+R14
+R15
+!i113 1
+R6
+R7
+R8
+vreg_file
+R1
+R9
+!i10b 1
+!s100 4b5E?8<EkbF0QjoFEE6f]0
+IfEKZo7hc_30Ua12OZLmhQ0
+R3
+R10
+S1
+R0
+R11
+R12
+R13
+L0 118
+R4
+r1
+!s85 0
+31
+R5
+R14
+R15
+!i113 1
+R6
+R7
+R8
+vslc3
+R1
+R2
+!i10b 1
+!s100 O_3kj;9B;Gj36i?^ck5mQ1
+I>]G`deFlSL862Y>i^6zmd1
+R3
+!s105 slc3_sv_unit
+S1
+R0
+w1614736119
+8D:/labs/lab4-su23/slc3.sv
+FD:/labs/lab4-su23/slc3.sv
+L0 20
+R4
+r1
+!s85 0
+31
+R16
+!s107 D:/labs/lab4-su23/slc3.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/slc3.sv|
+!i113 1
+R6
+R7
+R8
+XSLC3_2
+R1
+R9
+!i10b 1
+!s100 Cz8_^@QRefP31?j=Zf>lj0
+IHbQiiR5^Q<gSQiJzZ4[;V2
+VHbQiiR5^Q<gSQiJzZ4[;V2
+S1
+R0
+w1506381592
+8D:/labs/lab4-su23/SLC3_2.sv
+FD:/labs/lab4-su23/SLC3_2.sv
+L0 24
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/labs/lab4-su23/SLC3_2.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/SLC3_2.sv|
+!i113 1
+R6
+R7
+R8
+n@s@l@c3_2
+vslc3_testtop
+R1
+R2
+!i10b 1
+!s100 ^4hhCjYV2aT;kkekDk8a71
+IgdVPW^?]6b:ViPCce]eVd2
+R3
+!s105 slc3_testtop_sv_unit
+S1
+R0
+w1591547202
+8D:/labs/lab4-su23/slc3_testtop.sv
+FD:/labs/lab4-su23/slc3_testtop.sv
+L0 4
+R4
+r1
+!s85 0
+31
+R16
+!s107 D:/labs/lab4-su23/slc3_testtop.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/slc3_testtop.sv|
+!i113 1
+R6
+R7
+R8
+vsync
+R1
+R9
+!i10b 1
+!s100 OHNUFN]797>kYzRL;ikZR2
+IlIMZFHnkDQ^M2:_m?US2f2
+R3
+Z31 !s105 synchronizers_sv_unit
+S1
+R0
+Z32 w1591500476
+Z33 8D:/labs/lab4-su23/synchronizers.sv
+Z34 FD:/labs/lab4-su23/synchronizers.sv
+L0 7
+R4
+r1
+!s85 0
+31
+R5
+Z35 !s107 D:/labs/lab4-su23/synchronizers.sv|
+Z36 !s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/synchronizers.sv|
+!i113 1
+R6
+R7
+R8
+vsync_r0
+R1
+R9
+!i10b 1
+!s100 _Sn:CfHFjznVZen=7jc>C2
+Ig`=l>eZkzTiZLa`GciBkW2
+R3
+R31
+S1
+R0
+R32
+R33
+R34
+L0 21
+R4
+r1
+!s85 0
+31
+R5
+R35
+R36
+!i113 1
+R6
+R7
+R8
+vsync_r1
+R1
+R9
+!i10b 1
+!s100 4jfZd?z`MK2Y<NLFC0<QH2
+IYDnOzCILScObKKR9WX@<@2
+R3
+R31
+S1
+R0
+R32
+R33
+R34
+L0 42
+R4
+r1
+!s85 0
+31
+R5
+R35
+R36
+!i113 1
+R6
+R7
+R8
+vtest_memory
+R1
+R9
+!i10b 1
+!s100 JAXhO?6GV:H>``me>_X5<1
+I:oYUMk2V61Wh[m`R7GWi:3
+R3
+!s105 test_memory_sv_unit
+S1
+R0
+w1591648402
+8D:/labs/lab4-su23/test_memory.sv
+FD:/labs/lab4-su23/test_memory.sv
+L0 26
+R4
+r1
+!s85 0
+31
+R5
+!s107 D:/labs/lab4-su23/test_memory.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/test_memory.sv|
+!i113 1
+R6
+R7
+R8
+vtestbench
+R1
+R2
+!i10b 1
+!s100 @:6T@EBI[MK2<c=DT=mJA2
+IaN3TZ6ChTT_PiJ^D`JnOi3
+R3
+!s105 testbench_sv_unit
+S1
+R0
+w1688981242
+8D:/labs/lab4-su23/testbench.sv
+FD:/labs/lab4-su23/testbench.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R16
+!s107 D:/labs/lab4-su23/testbench.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+D:/labs/lab4-su23|D:/labs/lab4-su23/testbench.sv|
+!i113 1
+R6
+R7
+R8
