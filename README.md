@@ -1,2 +1,2 @@
 # jamegits
-For school project
+For school projects starting from Junior year to MS
