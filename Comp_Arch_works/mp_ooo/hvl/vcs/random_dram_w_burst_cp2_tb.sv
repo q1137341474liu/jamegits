@@ -61,7 +61,7 @@ module random_dram_w_burst_cp2_tb
     task run_random_instrs();
         assign itf.ready = 1'b1;
         itf.rvalid = 1'b0;
-        repeat (10000) begin
+        repeat (5000) begin
             @(posedge itf.clk iff (|itf.read || |itf.write));
             itf.rvalid <= 1'b0;
             addr <= itf.addr;

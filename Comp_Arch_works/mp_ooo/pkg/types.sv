@@ -121,6 +121,25 @@ package rv32im_types;
         op_cp2_reg       = 7'b0110011  // arith ops with register operands (R type)
     } cp2_opcode;
 
+    typedef enum logic [1:0]{
+        way_A = 2'b00,
+        way_B = 2'b01,
+        way_C = 2'b10,
+        way_D = 2'b11
+    } way_t;
+
+    // typedef enum logic [1:0]{
+    //     hit        = 2'b00;
+    //     clean_miss = 2'b01;
+    //     dirty_miss = 2'b10;
+    // }
+
+    typedef enum logic [1:0] {
+        no_write  = 2'b00,
+        write_cpu = 2'b01,
+        write_mem = 2'b10
+    } write_t;
+
     typedef union packed {
         logic [31:0] word;
 

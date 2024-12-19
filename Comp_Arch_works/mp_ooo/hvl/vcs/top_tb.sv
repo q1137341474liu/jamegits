@@ -4,7 +4,7 @@ module top_tb;
     timeprecision 1ps;
 
     int clock_half_period_ps = 1000;
-    longint timeout = 64'd1000000;
+    longint timeout;// = 64'd1000000;
     initial begin
         $value$plusargs("CLOCK_PERIOD_PS_ECE411=%d", clock_half_period_ps);
         clock_half_period_ps = clock_half_period_ps / 2;
@@ -32,6 +32,7 @@ module top_tb;
     // To test individual module: create seperate tb for each module and instantiate here
     //--------------------------------------------------------
     //cacheline_adapter_tb cacheline_adapter_tb(.itf(mem_itf)); // For testing cacheline_adapter
+    //pipelined_cache_tb pipelined_cache_tb(.itf(mem_itf));
     //--------------------------------------------------------
    
 
@@ -101,7 +102,7 @@ module top_tb;
         // uncomment code below for individual module test
         // comment out if you want to test cpu and use rvfi monitor
         // ------------------------------------------------------
-        //  #800000;
+        //  #200000;
         //  $finish;
 
     end

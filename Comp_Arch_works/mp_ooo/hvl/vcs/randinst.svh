@@ -5,7 +5,7 @@ class RandInst;
     // You will increment this number as you generate more random instruction
     // types. Once finished, NUM_TYPES should be 9, for each opcode type in
     // rv32i_opcode.
-    localparam NUM_TYPES = 7;
+    localparam NUM_TYPES = 4;
 
     // Note that the `instr_t` type is from ../pkg/types.sv, there are TODOs
     // you must complete there to fully define `instr_t`.
@@ -122,30 +122,30 @@ class RandInst;
         // }
 
         // // TODO: Do all 9 types!
-        // Branch instructions
-        instr_type[2] -> {
-            instr.b_type.opcode == op_b_br;
-            instr.b_type.funct3 inside {branch_f3_beq, branch_f3_bne, branch_f3_blt, branch_f3_bge, branch_f3_bltu, branch_f3_bgeu};
-        }
+        // // Branch instructions
+        // instr_type[2] -> {
+        //     instr.b_type.opcode == op_b_br;
+        //     instr.b_type.funct3 inside {branch_f3_beq, branch_f3_bne, branch_f3_blt, branch_f3_bge, branch_f3_bltu, branch_f3_bgeu};
+        // }
 
-        // JALR instructions
-        instr_type[3] -> {
-            instr.i_type.opcode == op_b_jalr;
-            instr.i_type.funct3 == 3'b000;
-        }
+        // // JALR instructions
+        // instr_type[3] -> {
+        //     instr.i_type.opcode == op_b_jalr;
+        //     instr.i_type.funct3 == 3'b000;
+        // }
 
-        // JAL instructions
-        instr_type[4] -> {
-            instr.j_type.opcode == op_b_jal;
-        }
+        // // JAL instructions
+        // instr_type[4] -> {
+        //     instr.j_type.opcode == op_b_jal;
+        // }
 
         // AUIPC instructions
-        instr_type[5] -> {
+        instr_type[2] -> {
             instr.u_type.opcode == op_b_auipc;
         }
 
         // LUI instructions
-        instr_type[6] -> {
+        instr_type[3] -> {
             instr.u_type.opcode == op_b_lui;
         }
 

@@ -16,10 +16,12 @@ import rv32im_types::*;
 
 );
 
-localparam int ROB_DEPTH = 4;
+localparam int ROB_DEPTH = 8;
 localparam int RS_DEPTH = 4;
-localparam int IQ_DEPTH = 4;
-localparam int LSQ_DEPTH = 4;
+localparam int IQ_DEPTH = 16;
+localparam int LSQ_DEPTH = 8;
+localparam int MUL_CYCLE = 16;
+localparam int DIV_CYCLE = 16;
 
 logic [31:0]                  instr_fetch;
 logic                         iq_full;
@@ -209,6 +211,18 @@ logic [31:0]                  load_store_cdb_data;
 logic [31:0]                  lsq_addr;
 logic                         lsq_addr_valid;
 logic [$clog2(ROB_DEPTH)-1:0] lsq_commit_tag;
+logic                         load_rs_full;
+
+logic                         br_take;
+logic [31:0]                  commit_pc;
+logic [31:0]                  commit_pc_next;
+logic [6:0]                   commit_opcode;
+logic                         commit_br_take;
+
+logic [6:0]                   branch_pc_opcode;
+logic [31:0]                  pc_compare;
+
+logic                         mispredict;
 
 
 
@@ -275,7 +289,15 @@ fetch fetch_unit (
     .i_dram_ready(i_dram_ready),
     .i_dram_raddr(i_dram_raddr),
     .i_dram_rdata(i_dram_rdata),
-    .i_dram_rvalid(i_dram_rvalid)
+    .i_dram_rvalid(i_dram_rvalid),
+
+// from rob
+    .commit_pc(commit_pc),
+    .commit_pc_next(fetch_pc_next),
+    .commit_opcode(commit_opcode),
+    .commit_br_take(commit_br_take),
+    .rob_commit(rob_commit)
+    //.mispredict(mispredict)
 );
 
 bmem_arbitor bmem_arbitor(
@@ -352,6 +374,7 @@ decoder #(
     
     .iq_issue(iq_issue),
     .lsq_full(lsq_full),
+    .lsq_load_rs_full(load_rs_full),
 
     //ROB side signal
     .rob_valid(rob_valid),
@@ -455,7 +478,7 @@ reservation_station #(
 
 );
 
-reservation_station #(
+mult_div_rs #(
     .RS_DEPTH(RS_DEPTH),
     .ROB_DEPTH(ROB_DEPTH)
 ) mult_div_rs (
@@ -616,6 +639,7 @@ load_store_queue
     .decoder_instr(rs_instr),
     .decoder_tag(rs_tag_dest),
     .lsq_full(lsq_full),
+    .load_rs_full(load_rs_full),
     .decoder_load_store_valid(rs_load_store_valid),
 
     // load_store_adder side signal
@@ -697,7 +721,13 @@ rob #(
     .rs_ready(comp_issue), // connect to RS comp_issue output
 
     .branch_pc_next(branch_pc_next),
+    .br_take(br_take),
+
     .fetch_pc_next(fetch_pc_next),
+    .commit_pc(commit_pc),
+    .commit_opcode(commit_opcode),
+    .commit_pc_next(commit_pc_next),
+    .commit_br_take(commit_br_take),
 
     .lsq_dmem_addr(rob_dmem_addr), //for rvfi
     .lsq_dmem_rmask(rob_dmem_rmask), //for rvfi
@@ -705,6 +735,8 @@ rob #(
     .lsq_dmem_rdata(rob_dmem_rdata), //for rvfi
     .lsq_dmem_wdata(rob_dmem_wdata), //for rvfi
     .lsq_commit_tag(lsq_commit_tag)
+
+    //.mispredict(mispredict)
     
     // rvfi connection signal
     //.rvfi
@@ -759,7 +791,9 @@ alu #(
 );
 
 mult_div #(
-    .ROB_DEPTH(ROB_DEPTH)
+    .ROB_DEPTH(ROB_DEPTH),
+    .MUL_CYCLE(MUL_CYCLE),
+    .DIV_CYCLE(DIV_CYCLE)
 ) mult_div (
     .clk(clk),
     .rst(rst),
@@ -792,7 +826,10 @@ branch_comp #(
     .cdb_valid(branch_valid),
     .cdb_tag(branch_cdb_tag),
     .pc_next(branch_pc_next),
-    .branch_resp(branch_resp)
+    .branch_resp(branch_resp),
+    .br_take(br_take),
+    .pc_compare(pc_compare),
+    .branch_pc_opcode(branch_pc_opcode)
 );
 
 cdb #(

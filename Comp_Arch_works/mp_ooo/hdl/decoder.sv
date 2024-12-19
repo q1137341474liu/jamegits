@@ -74,7 +74,8 @@ import rv32im_types::*;
     output  logic [31:0]                  rs_pc,
 
     //LSQ side signal
-    input   logic                         lsq_full
+    input   logic                         lsq_full,
+    input   logic                         lsq_load_rs_full
 );
 
     //instruction assign
@@ -346,7 +347,7 @@ import rv32im_types::*;
             end
             
             op_b_load : begin
-                if (!lsq_full && iq_valid && !rs_load_store_full && !iq_empty && !rob_full) begin
+                if (!lsq_full && !lsq_load_rs_full && iq_valid && !rs_load_store_full && !iq_empty && !rob_full) begin
                     if(rob_commit && (rob_commit_tag == regf_tag_rs1) && !regf_ready_rs1) begin
                         rs_data_A   = rob_commit_rd_v;
                         rs_tag_A    = '0;

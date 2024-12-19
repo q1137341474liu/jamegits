@@ -1,6 +1,8 @@
 module mult_div 
 #(
-    parameter ROB_DEPTH = 4
+    parameter ROB_DEPTH = 4,
+    parameter MUL_CYCLE = 8,
+    parameter DIV_CYCLE = 16
 )
 (
     input logic clk,
@@ -260,7 +262,7 @@ end
 // end
 
 // assign valid_cdb = valid & ~flush_reg;
-DW_mult_seq #(32, 33, 1, 8, 0, 1, 1, 0) 
+DW_mult_seq #(32, 33, 1, MUL_CYCLE, 0, 1, 1, 0) 
     sumult (
     .clk(clk),
     .rst_n(~rst),
@@ -272,7 +274,7 @@ DW_mult_seq #(32, 33, 1, 8, 0, 1, 1, 0)
     .product(sumult_product)
 );
 
-DW_mult_seq #(32, 32, 0, 8, 0, 1, 1, 0) 
+DW_mult_seq #(32, 32, 0, MUL_CYCLE, 0, 1, 1, 0) 
     umult (
     .clk(clk),
     .rst_n(~rst),
@@ -284,7 +286,7 @@ DW_mult_seq #(32, 32, 0, 8, 0, 1, 1, 0)
     .product(umult_product)
 );
 
-DW_mult_seq #(32, 32, 1, 8, 0, 1, 1, 0) 
+DW_mult_seq #(32, 32, 1, MUL_CYCLE, 0, 1, 1, 0) 
     smult (
     .clk(clk),
     .rst_n(~rst),
@@ -296,7 +298,7 @@ DW_mult_seq #(32, 32, 1, 8, 0, 1, 1, 0)
     .product(smult_product)
 );
 
-DW_div_seq #(32, 32, 0, 16, 0, 1, 1, 0) 
+DW_div_seq #(32, 32, 0, DIV_CYCLE, 0, 1, 1, 0) 
     udiv (
     .clk(clk),
     .rst_n(~rst),
@@ -310,7 +312,7 @@ DW_div_seq #(32, 32, 0, 16, 0, 1, 1, 0)
     .remainder(udiv_r)
 );
 
-DW_div_seq #(32, 32, 1, 16, 0, 1, 1, 0) 
+DW_div_seq #(32, 32, 1, DIV_CYCLE, 0, 1, 1, 0) 
     sdiv (
     .clk(clk),
     .rst_n(~rst),

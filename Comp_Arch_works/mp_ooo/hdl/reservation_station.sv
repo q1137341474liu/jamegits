@@ -240,11 +240,29 @@ module reservation_station #(
                     if (!found_comp_issue && valid_arr[i] && (ready_A_arr[i] && ready_B_arr[i])) begin
                         found_comp_issue   <= 1'b1;
                         comp_issue         <= 1'b1;
+                        break;
                     end
+                    else begin
+                        found_comp_issue   <= found_comp_issue;
+                        comp_issue         <= comp_issue;
+                    end                       
                 end  
             end
         end
     end
+
+    // always_comb begin
+    //     found_comp_issue   = 1'b0;
+    //     comp_issue         = 1'b0;
+    //     for (int i = 0; i < RS_DEPTH; i++) begin
+    //         if ((instr_arr[rs_head] != '0) && valid_arr[i] && (ready_A_arr[i] && ready_B_arr[i])) begin
+    //         found_comp_issue   = 1'b1;
+    //         comp_issue         = 1'b1;
+    //         break;
+    //         end
+    //     end                     
+    // end  
+
 
     always_comb begin
         if (comp_issue) begin

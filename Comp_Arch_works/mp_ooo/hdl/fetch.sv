@@ -19,7 +19,16 @@ module fetch (
     input  logic        i_dram_ready,
     input  logic [31:0] i_dram_raddr,
     input  logic [63:0] i_dram_rdata,
-    input  logic        i_dram_rvalid
+    input  logic        i_dram_rvalid,
+
+    // from rob
+    input logic [31:0]  commit_pc,
+    input logic [31:0]  commit_pc_next,
+    input logic [6:0]   commit_opcode,
+    input logic         commit_br_take,
+
+    //output logic        mispredict,
+    input logic         rob_commit
 
 );
     logic [31:0]  pc;
@@ -35,6 +44,10 @@ module fetch (
     logic         fetch;
     logic         branch_buffer;
     logic [31:0]  branch_addr_buffer;
+
+    //from bp and btb 
+    logic         predict_take;
+    logic [31:0]  btb_pc_next;
 
 
     always_comb begin
@@ -57,11 +70,12 @@ module fetch (
     end
 
      // fetch FSM
-    enum logic [1:0] {
+    enum logic {
         START,
-        OPERATE,
-        IDLE
+        OPERATE
     } fetch_state, fetch_state_next;
+
+    assign fetch_state_next = OPERATE;
 
     always_ff @(posedge clk) begin
         if (rst) begin
@@ -72,28 +86,7 @@ module fetch (
         end
     end
 
-    always_comb begin
-        fetch_state_next = IDLE;
-        case(fetch_state)
-            START: begin
-                fetch_state_next = OPERATE;
-            end
-            OPERATE: begin
-                if (i_cache_resp) begin
-                    fetch_state_next = IDLE;
-                end
-                else begin
-                    fetch_state_next = OPERATE;
-                end
-            end
-            IDLE: begin
-                fetch_state_next = OPERATE;
-            end
-            default: begin
-                fetch_state_next = IDLE;
-            end
-        endcase    
-    end
+    
 
     always_comb begin
         if (rst) begin
@@ -101,21 +94,13 @@ module fetch (
         end
         else begin
             case (fetch_state)
-                IDLE: begin
-                    if (branch) begin
-                        pc_next = pc_branch;
-                    end
-                    else begin
-                        pc_next = pc + 'd4;
-                    end
-                end
                 OPERATE: begin
                     if (!branch_buffer && i_cache_resp) begin
                         if (branch) begin
                             pc_next = pc_branch;
                         end
                         else begin
-                            pc_next = pc + 'd4;
+                            pc_next = btb_pc_next;
                         end
                     end
                     else begin
@@ -123,21 +108,15 @@ module fetch (
                             pc_next = branch_addr_buffer;
                         end
                         else begin
-                            pc_next = pc + 'd4;
+                            pc_next = btb_pc_next;
                         end
                     end
                 end
                 default: begin
-                    pc_next = pc + 'd4;
+                    pc_next = btb_pc_next;
                 end
 
             endcase
-            // if (branch) begin
-            //     pc_next = pc_branch;
-            // end
-            // else begin
-            //     pc_next = pc + 'd4;
-            // end
         end
     end
 
@@ -149,24 +128,10 @@ module fetch (
         end
         else begin
             case (fetch_state) 
-                IDLE: begin
-                    if (branch) begin
-                        pc <= pc_next;
-                    end
-                    else begin
-                        if(i_cache_resp && fetch) begin
-                            pc <= pc_next;
-                        end
-                        else begin
-                            pc <= pc;
-                        end
-                    end
-                end 
                 OPERATE: begin
-                    
                     if(i_cache_resp) begin
                         if (branch) begin
-                            pc <= pc_next;
+                            pc <= pc_branch;
                         end
                         else begin
                             if (fetch) begin
@@ -176,7 +141,6 @@ module fetch (
                                 pc <= pc;
                             end
                         end
-                        
                     end
                     else begin
                         pc <= pc;
@@ -202,10 +166,6 @@ module fetch (
         end
         else begin
             case (fetch_state)
-                IDLE: begin
-                    branch_buffer <= '0;
-                    branch_addr_buffer <= '0;
-                end
                 OPERATE: begin
                     if (!i_cache_resp) begin
                         if (branch) begin
@@ -228,37 +188,26 @@ module fetch (
         end
     end
 
-   
-
-    //assign fetch_state_next = OPERATE;
 
     always_comb begin
         case (fetch_state) 
             START: begin
                 pc_fetch = pc;
             end
-            IDLE: begin
-                // if (!i_cache_resp) begin
-                //     pc_fetch = pc;
-                // end
-                // else begin
-                //     if (branch_buffer) begin
-                //         pc_fetch = branch_addr_buffer;
-                //     end
-                //     else begin
-                //         //pc_fetch = pc_next;
-                //         pc_fetch = pc;
-                //     end
-                // end
+            OPERATE: begin
                 if (branch) begin
                     pc_fetch = pc_branch;
                 end
                 else begin
-                    pc_fetch = pc;
+                    if (i_cache_resp && fetch) begin
+                        pc_fetch = pc_next;
+                    end
+                    else begin
+                        pc_fetch = pc;
+                    end
                 end
-            end
-            OPERATE: begin
-                pc_fetch = pc;
+
+                
             end
             default: begin
                 pc_fetch = pc_next;
@@ -270,7 +219,7 @@ module fetch (
     assign pc_next_out    = pc_next;
 
     
-    provided_cache icache (
+    pipelined_cache icache (
         .clk        (clk),
         .rst        (rst),
         .ufp_addr   (pc_fetch),
@@ -286,6 +235,23 @@ module fetch (
         .dfp_wdata  (i_adapter_wdata),
         .dfp_resp   (i_adapter_resp)
     );
+    
+    // provided_cache icache (
+    //     .clk        (clk),
+    //     .rst        (rst),
+    //     .ufp_addr   (pc_fetch),
+    //     .ufp_rmask  (4'b1111),
+    //     .ufp_wmask  ('0),
+    //     .ufp_rdata  (instr),
+    //     .ufp_wdata  ('0),
+    //     .ufp_resp   (i_cache_resp),
+    //     .dfp_addr   (i_adapter_addr),
+    //     .dfp_read   (i_adapter_read),
+    //     .dfp_write  (i_adapter_write),
+    //     .dfp_rdata  (i_adapter_rdata),
+    //     .dfp_wdata  (i_adapter_wdata),
+    //     .dfp_resp   (i_adapter_resp)
+    // );
 
     cacheline_adapter icache_adapter (
         .clk        (clk),
@@ -304,6 +270,38 @@ module fetch (
         .dfp_raddr  (i_dram_raddr),
         .dfp_rdata  (i_dram_rdata),
         .dfp_rvalid (i_dram_rvalid) 
+    );
+
+    gshare_bp #(
+        .GHR_LENGTH(30),
+        .PHT_DEPTH(6)
+    ) gshare_bp (
+        .clk(clk),
+        .rst(rst),
+        .flush(branch),
+        .br_take(commit_br_take),
+        .rob_commit(rob_commit),
+        .commit_pc(commit_pc),
+        .commit_opcode(commit_opcode),
+        .pc(pc),
+        .predict_take(predict_take)
+    );
+
+
+    btb #(
+        .BTB_DEPTH(3)
+    ) btb (
+        .clk(clk),
+        .rst(rst),
+        .br_take(commit_br_take),
+        .pc(pc),
+        .rob_commit(rob_commit),
+        .commit_pc(commit_pc),
+        .commit_pc_next(commit_pc_next),
+        .commit_opcode(commit_opcode),
+        .predict_take(predict_take),
+        .btb_pc_next(btb_pc_next)
+        //.mispredict(mispredict)
     );
    
     

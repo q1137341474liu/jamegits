@@ -47,9 +47,14 @@ import rv32im_types::*;
 
     // branch side signal
     input   logic [31:0]                    branch_pc_next,
+    input   logic                           br_take,
 
     // fetch side signal
-    output  logic [31:0]                    fetch_pc_next,
+    output  logic [31:0]                    fetch_pc_next, //take this when flush happen, otherwise use pc_next from btb
+    output  logic [31:0]                    commit_pc,
+    output  logic [6:0]                     commit_opcode,
+    output  logic                           commit_br_take,
+    output  logic [31:0]                    commit_pc_next,
 
     // lsq side signal
     input   logic [31:0]                    lsq_dmem_addr, //for rvfi
@@ -58,6 +63,9 @@ import rv32im_types::*;
     input   logic [31:0]                    lsq_dmem_rdata, //for rvfi
     input   logic [31:0]                    lsq_dmem_wdata, //for rvfi
     output  logic [$clog2(ROB_DEPTH)-1:0]   lsq_commit_tag
+
+    //btb side siganl
+    //input logic                             mispredict
     // rvfi connection signal
     //output  rvfi_t                          rvfi
 );
@@ -74,17 +82,25 @@ import rv32im_types::*;
     logic [31:0]                    pc_arr[ROB_DEPTH];
     logic [31:0]                    pc_next_arr[ROB_DEPTH];
     logic                           pc_next_valid_arr[ROB_DEPTH];
-    logic [31:0]                    dmem_addr;
-    logic [3:0]                     dmem_rmask;
-    logic [3:0]                     dmem_wmask;
-    logic [31:0]                    dmem_rdata;
-    logic [31:0]                    dmem_wdata;
+    logic [31:0]                    dmem_addr[ROB_DEPTH];
+    logic [3:0]                     dmem_rmask[ROB_DEPTH];
+    logic [3:0]                     dmem_wmask[ROB_DEPTH];
+    logic [31:0]                    dmem_rdata[ROB_DEPTH];
+    logic [31:0]                    dmem_wdata[ROB_DEPTH];
 
    
     logic                           regf_we_arr[ROB_DEPTH];
     logic                           commit_ready_arr [ROB_DEPTH]; // verify rd_data is ready
     logic [63:0]                    order, order_next; //counter for commited instruction
     logic [$clog2(ROB_DEPTH) - 1:0] rob_head, rob_tail; // head pointing to commit row, tail pointing to issue row
+
+    logic                           br_take_arr[ROB_DEPTH];
+    // logic [31:0]                    branch_target_pc_arr[ROB_DEPTH];
+    logic                           br_flush_arr[ROB_DEPTH];
+
+    //performance counter
+    logic [63:0]                    flush_count;
+    logic [63:0]                    br_count;
    
     assign regf_commit_regf_we    = regf_we_arr[rob_head];
     assign regf_commit_rd_s       = rd_s_arr[rob_head];
@@ -93,6 +109,21 @@ import rv32im_types::*;
     assign regf_issue_rd_s        = decoder_rd_s;
     assign regf_issue_tag         = rob_tail;
     assign lsq_commit_tag         = rob_head;
+
+    always_ff @(posedge clk) begin
+        if(rst) begin
+            flush_count <= '0;
+            br_count <= '0;
+        end
+        else begin
+            if(commit_br_take) begin
+                br_count <= br_count + 'd1;
+            end
+            if(flush) begin
+                flush_count <= flush_count + 'd1;
+            end
+        end
+    end
 
     //rob_full logic
     always_comb begin
@@ -111,19 +142,35 @@ import rv32im_types::*;
     end
 
     //flush logic
+    // always_comb begin
+    //     flush = '0;
+    //     fetch_pc_next = 'x;
+    //     if(rob_commit) begin
+    //         if(pc_next_arr[rob_head] == pc_arr[rob_head] +'d4 ) begin
+    //             flush = '0;
+    //         end
+    //         else begin
+    //             flush = 1'b1;
+    //             fetch_pc_next = pc_next_arr[rob_head];
+    //         end
+    //     end
+    // end
+
     always_comb begin
         flush = '0;
-        fetch_pc_next = 'x;
-        if(rob_commit) begin
-            if(pc_next_arr[rob_head] == pc_arr[rob_head] +'d4 ) begin
-                flush = '0;
+        commit_br_take = '0;
+        if (commit_opcode == op_b_br || commit_opcode == op_b_jal || commit_opcode == op_b_jalr) begin
+            if (br_flush_arr[rob_head]) begin
+                flush = '1;
             end
-            else begin
-                flush = 1'b1;
-                fetch_pc_next = pc_next_arr[rob_head];
+            if (br_take_arr[rob_head]) begin
+                commit_br_take = '1;
             end
         end
     end
+
+    assign fetch_pc_next = pc_next_arr[rob_head];
+
 
     //head tail logic
     always_ff @(posedge clk) begin
@@ -164,34 +211,59 @@ import rv32im_types::*;
                 pc_next_valid_arr[i]    <= '0;
                 regf_we_arr[i]          <= '0;
                 commit_ready_arr [i]    <= '0;
+                br_take_arr[i]          <= '0;
+                // branch_target_pc_arr[i]     <= '0;
+                br_flush_arr[i]         <= '0;
+                dmem_addr[i]   <= '0;
+                dmem_rmask[i]  <= '0;
+                dmem_wmask[i]  <= '0;
+                dmem_rdata[i]  <= '0;
+                dmem_wdata[i]  <= '0;
             end
-            dmem_addr   <= '0;
-            dmem_rmask  <= '0;
-            dmem_wmask  <= '0;
-            dmem_rdata  <= '0;
-            dmem_wdata  <= '0;
+
         end
         else begin
             for (int unsigned i = 0; i < ROB_DEPTH; i++) begin
                 for (int j = 0; j < CDB_SIZE; j++) begin
                     if (!commit_ready_arr[i] && valid_arr[i] && valid_CDB[j]) begin 
                         if (tag_CDB[j] == ($clog2(ROB_DEPTH))'(i)) begin
-                            dmem_addr             <= lsq_dmem_addr;
-                            dmem_rmask            <= lsq_dmem_rmask;
-                            dmem_wmask            <= lsq_dmem_wmask;
-                            dmem_rdata            <= lsq_dmem_rdata;
-                            dmem_wdata            <= lsq_dmem_wdata;
+
+                            if (j == 32'(2)) begin
+                                dmem_addr[i]             <= lsq_dmem_addr;
+                                dmem_rmask[i]            <= lsq_dmem_rmask;
+                                dmem_wmask[i]            <= lsq_dmem_wmask;
+                                dmem_rdata[i]            <= lsq_dmem_rdata;
+                                dmem_wdata[i]            <= lsq_dmem_wdata;
+                                if (regf_we_arr[i]) begin
+                                    rd_v_arr[i]           <= data_CDB[j];
+                                    commit_ready_arr[i]   <= 1'b1;
+                                    // if (pc_next_valid_arr[i] == 1'b0) begin
+                                    //     pc_next_arr[i]        <= branch_pc_next;
+                                    // end
+                                end
+                            end
+                            if(valid_CDB[3]) begin
+                                commit_ready_arr[i]   <= 1'b1;
+                                if ((pc_next_arr[tag_CDB[3]] != branch_pc_next)) begin
+                                    br_flush_arr[tag_CDB[3]] <= '1;
+                                    pc_next_arr[tag_CDB[3]] <= branch_pc_next;
+                                end
+                                if (br_take) begin
+                                    br_take_arr[tag_CDB[3]] <= '1;
+                                end
+                            end
                             if (regf_we_arr[i]) begin
                                 rd_v_arr[i]           <= data_CDB[j];
                                 commit_ready_arr[i]   <= 1'b1;
-                                if (pc_next_valid_arr[i] == 1'b0) begin
-                                    pc_next_arr[i]        <= branch_pc_next;
-                                end
+                                // if (pc_next_valid_arr[i] == 1'b0) begin
+                                //     pc_next_arr[i]        <= branch_pc_next;
+                                // end
                             end
-                            if (!pc_next_valid_arr[i]) begin
-                                pc_next_arr[i]        <= branch_pc_next;
-                                commit_ready_arr[i]   <= 1'b1;
-                            end
+
+                            // if (!pc_next_valid_arr[i]) begin
+                            //     pc_next_arr[i]        <= branch_pc_next;
+                            //     commit_ready_arr[i]   <= 1'b1;
+                            // end
                             else begin // for store instruction
                                 commit_ready_arr[i]   <= 1'b1;
                             end
@@ -220,11 +292,14 @@ import rv32im_types::*;
                 pc_next_arr[rob_head]         <= '0;
                 pc_next_valid_arr[rob_head]   <= '0;
                 commit_ready_arr [rob_head]   <= '0;
-                dmem_addr                     <= '0;
-                dmem_rmask                    <= '0;
-                dmem_wmask                    <= '0;
-                dmem_rdata                    <= '0;
-                dmem_wdata                    <= '0;
+                dmem_addr[rob_head]                     <= '0;
+                dmem_rmask[rob_head]                    <= '0;
+                dmem_wmask[rob_head]                    <= '0;
+                dmem_rdata[rob_head]                    <= '0;
+                dmem_wdata[rob_head]                    <= '0;
+                br_take_arr[rob_head]         <= '0;
+                // branch_target_pc_arr[rob_head]<= '0;
+                br_flush_arr[rob_head]        <= '0;
             end
             if (iq_issue) begin
                 valid_arr[rob_tail]           <= decoder_valid;
@@ -255,11 +330,15 @@ import rv32im_types::*;
         rvfi.rd_wdata   = rd_v_arr[rob_head];
         rvfi.pc_rdata   = pc_arr[rob_head];
         rvfi.pc_wdata   = pc_next_arr[rob_head];
-        rvfi.dmem_addr  = dmem_addr;
-        rvfi.dmem_rmask = dmem_rmask;
-        rvfi.dmem_wmask = dmem_wmask;
-        rvfi.dmem_rdata = dmem_rdata;
-        rvfi.dmem_wdata = dmem_wdata;
+        rvfi.dmem_addr  = dmem_addr[rob_head];
+        rvfi.dmem_rmask = dmem_rmask[rob_head];
+        rvfi.dmem_wmask = dmem_wmask[rob_head];
+        rvfi.dmem_rdata = dmem_rdata[rob_head];
+        rvfi.dmem_wdata = dmem_wdata[rob_head];
     end
+
+assign commit_pc = pc_arr[rob_head];
+assign commit_pc_next = pc_next_arr[rob_head];
+assign commit_opcode = instr_arr[rob_head][6:0];
 
 endmodule
