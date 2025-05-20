@@ -1,0 +1,13 @@
+job 9075774 is starting on gpub015.delta.ncsa.illinois.edu
+
+
+Test batch size: 1000
+Loading fashion-mnist data...Done
+Loading model...Done
+Conv-CPU==
+Op Time: 14187 ms
+Conv-CPU==
+Op Time: 39819.3 ms
+
+Test Accuracy: 0.886
+
