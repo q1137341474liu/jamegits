@@ -29,15 +29,4 @@
 
 <sup>†</sup>Each subfolder contains its own source, reports, and (where relevant) simulation data or notebooks.
 
----
-
-## Quick Start
-```bash
-# 1. Clone the repo
-git clone https://github.com/q1137341474liu/jamegits.git
-cd jamegits
-
-# 2. (Optional) create a Python environment for CV & GPU work
-conda env create -f env.yml        # or manually install the deps below
-conda activate jamegits
 
